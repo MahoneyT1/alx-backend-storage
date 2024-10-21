@@ -1,0 +1,1 @@
+MongoDB class and exercise on mongoDB and pymongo
