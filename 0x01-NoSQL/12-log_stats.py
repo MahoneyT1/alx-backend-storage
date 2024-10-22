@@ -30,15 +30,15 @@ methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
 
 print(collection_manager.count_documents({}), "Logs")
 print("Methods: ")
-print("\t methods GET: {}".format(
+print("\t method GET: {}".format(
     collection_manager.count_documents({"method": "GET"})))
-print("\t methods POST: {}".format(
+print("\t method POST: {}".format(
     collection_manager.count_documents({"method": "POST"})))
-print("\t methods PUT: {}".format(
+print("\t method PUT: {}".format(
     collection_manager.count_documents({"method": "PUT"})))
-print("\t methods PATCH: {}".format(
+print("\t method PATCH: {}".format(
     collection_manager.count_documents({"method": "PATCH"})))
-print("\t methods DELETE: {}".format(
+print("\t method DELETE: {}".format(
     collection_manager.count_documents({"method": "DELETE"})))
 print("{} status check".format(
     collection_manager.count_documents({"path": "/status"})))
