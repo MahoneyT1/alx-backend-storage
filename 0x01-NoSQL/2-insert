@@ -7,4 +7,4 @@ docOne = {
     'name': 'Holberton school'
 }
 
-db.school.insertOne(docOne);
+db.school.insertOne(docOne)
