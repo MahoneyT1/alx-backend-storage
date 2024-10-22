@@ -19,26 +19,29 @@ path=/status
 """
 import pymongo
 from pymongo import MongoClient
+from typing import Collection
 
 
 client = MongoClient('mongodb://127.0.0.1:27017')
 collection_manager = client.logs.nginx
 
-# list of methods
 
-methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
+def count_methods(collection_object: Collection) -> None:
+    """Counts the total number of methods called in this database"""
 
-print(collection_manager.count_documents({}), "Logs")
-print("Methods: ")
-print("    method GET: {}".format(
-    collection_manager.count_documents({"method": "GET"})))
-print("    method POST: {}".format(
-    collection_manager.count_documents({"method": "POST"})))
-print("    method PUT: {}".format(
-    collection_manager.count_documents({"method": "PUT"})))
-print("    method PATCH: {}".format(
-    collection_manager.count_documents({"method": "PATCH"})))
-print("    method DELETE: {}".format(
-    collection_manager.count_documents({"method": "DELETE"})))
-print("{} status check".format(
-    collection_manager.count_documents({"path": "/status"})))
+    # list of methods
+    methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
+
+    print(collection_object.count_documents({}), "Logs")
+    print("Methods: ")
+
+    for method in methods:
+        counted_method = collection_object.count_documents({"method": method})
+        print("\tmethod {}: {}".format(method, counted_method))
+
+    status_check = collection_object.count_documents({"path": "/status"})
+    print("{} status check".format(status_check))
+
+
+if __name__ == "__main__":
+    count_methods(collection_manager)
