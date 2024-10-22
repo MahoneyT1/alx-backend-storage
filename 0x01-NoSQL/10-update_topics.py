@@ -9,9 +9,10 @@ topics (list of strings) will be the list of topics
 approached in the school
 """
 import pymongo
+from typing import Collection
 
 
-def update_topics(mongo_collection, name, topics):
+def update_topics(mongo_collection: Collection, name: str, topics: str) -> None:
     """Write a Python function that changes all topics
     of a school document based on the name
     """
