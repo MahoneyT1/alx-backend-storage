@@ -3,8 +3,8 @@
 // The document must have one attribute name with value “Holberton school”
 // The database name will be passed as option of mongo command
 
-docOne = {
+doc_one = {
     'name': 'Holberton school'
 }
 
-db.school.insertOne(docOne)
+db.school.insertOne(doc_one)
