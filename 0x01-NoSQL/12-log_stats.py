@@ -37,7 +37,7 @@ def count_methods(collection_object: Collection) -> None:
 
     for method in methods:
         counted_method = collection_object.count_documents({"method": method})
-        print("\tmethod {}: {}".format(method, counted_method))
+        print("    method {}: {}".format(method, counted_method))
 
     status_check = collection_object.count_documents({"path": "/status"})
     print("{} status check".format(status_check))
