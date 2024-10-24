@@ -36,7 +36,7 @@ class Cache:
         random key and return the key.
         """
 
-        new_key = f"{uuid4()}"
+        new_key = str(uuid4())
 
         # set into db
         self._redis.set(new_key, data)
