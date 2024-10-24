@@ -21,7 +21,7 @@ from typing import Any
 class Cache:
     """cache class that so far converts"""
 
-    def __init__(self) -> redis.Redis:
+    def __init__(self):
         """Initialize an instance with a new a new instance of
         redis.
         """
