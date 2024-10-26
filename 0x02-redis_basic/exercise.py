@@ -15,8 +15,7 @@ bytes, int or float.
 import redis
 from uuid import uuid4
 import json
-from typing import Union
-
+from typing import Union, Optional, Callable
 
 
 class Cache:
@@ -30,6 +29,29 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    def get(self, key: str, fn:
+            Optional[Callable] = None) -> Union[str, bytes, int, float]:
+        """Gets the """
+        value = self._redis.get(key)
+
+        if value is None:
+            print(f'key {key} does not exist.')
+
+        if fn:
+            value = fn(value)
+
+        return value
+
+    def get_str(self, key: str) -> str:
+        value = self._redis.get(key)
+
+        return value
+
+    def get_int(self, key: str) -> int:
+        value = self._redis.get(key)
+
+        return int(value.decode('utf-8'))
+
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """ a store method that takes a data argument and returns a
         string. The method should generate a random key
@@ -42,3 +64,16 @@ class Cache:
         # set into db
         self._redis.set(new_key, data)
         return new_key
+
+
+cache = Cache()
+
+TEST_CASES = {
+    b"foo": None,
+    123: int,
+    "bar": lambda d: d.decode("utf-8")
+}
+
+for value, fn in TEST_CASES.items():
+    key = cache.store(value)
+    assert cache.get(key, fn=fn) == value
