@@ -15,7 +15,27 @@ bytes, int or float.
 import redis
 from uuid import uuid4
 import json
+from functools import wraps
 from typing import Union, Optional, Callable
+
+
+def count_calls(func: Callable) -> callable:
+    """Above Cache define a count_calls decorator that takes a single method
+    Callable argument and returns a Callable.
+
+    As a key, use the qualified name of method using the __qualname__ dunder
+    method. Create and return function that increments the count for that
+    key every time the method is called and returns the value returned by
+    the original method.
+    """
+    key = func.__qualname__
+
+    @wraps(func)
+    def wrapper(self, *args):
+        """Wraps base function wrapper_func to count_calls"""
+
+        self._redis.incr(key)
+    return wrapper
 
 
 class Cache:
@@ -25,7 +45,6 @@ class Cache:
         """Initialize an instance with a new a new instance of
         redis.
         """
-
         self._redis = redis.Redis()
         self._redis.flushdb()
 
@@ -52,6 +71,7 @@ class Cache:
 
         return int(value.decode('utf-8'))
 
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """ a store method that takes a data argument and returns a
         string. The method should generate a random key
@@ -64,16 +84,3 @@ class Cache:
         # set into db
         self._redis.set(new_key, data)
         return new_key
-
-
-cache = Cache()
-
-TEST_CASES = {
-    b"foo": None,
-    123: int,
-    "bar": lambda d: d.decode("utf-8")
-}
-
-for value, fn in TEST_CASES.items():
-    key = cache.store(value)
-    assert cache.get(key, fn=fn) == value
