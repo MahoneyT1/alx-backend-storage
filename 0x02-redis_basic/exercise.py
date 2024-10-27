@@ -19,7 +19,7 @@ from functools import wraps
 from typing import Union, Optional, Callable
 
 
-def count_calls(method: Callable) -> callable:
+def count_calls(method: Callable) -> Callable:
     """ As a key, use the qualified name of method using the __qualname__ dunder
     method. Create and return function that increments the count for that
     key every time the method is called and returns the value returned by
