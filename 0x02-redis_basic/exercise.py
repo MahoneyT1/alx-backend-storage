@@ -20,10 +20,7 @@ from typing import Union, Optional, Callable
 
 
 def count_calls(func: Callable) -> callable:
-    """Above Cache define a count_calls decorator that takes a single method
-    Callable argument and returns a Callable.
-
-    As a key, use the qualified name of method using the __qualname__ dunder
+    """ As a key, use the qualified name of method using the __qualname__ dunder
     method. Create and return function that increments the count for that
     key every time the method is called and returns the value returned by
     the original method.
@@ -34,7 +31,7 @@ def count_calls(func: Callable) -> callable:
     def wrapper(self, *args):
         """Wraps base function wrapper_func to count_calls"""
 
-        self._redis.incr(key)
+        return self._redis.incr(key)
     return wrapper
 
 
@@ -78,7 +75,6 @@ class Cache:
         (e.g. using uuid), store the input data in Redis using the
         random key and return the key.
         """
-
         new_key = str(uuid4())
 
         # set into db
