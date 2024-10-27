@@ -19,15 +19,15 @@ from functools import wraps
 from typing import Union, Optional, Callable
 
 
-def count_calls(func: Callable) -> callable:
+def count_calls(method: Callable) -> callable:
     """ As a key, use the qualified name of method using the __qualname__ dunder
     method. Create and return function that increments the count for that
     key every time the method is called and returns the value returned by
     the original method.
     """
-    key = func.__qualname__
+    key = method.__qualname__
 
-    @wraps(func)
+    @wraps(method)
     def wrapper(self, *args):
         """Wraps base function wrapper_func to count_calls"""
 
